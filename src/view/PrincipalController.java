@@ -49,11 +49,11 @@ public class PrincipalController {
 	@FXML 
 	public void ruidosMedia() {
 		if(tres.isSelected()) {
-				imagem3 = Pdi.vizinhos(imagem1, 3, false);
+				imagem3 = Pdi.ruidos(imagem1, 3, false);
 		}else if(cruz.isSelected()) {
-			imagem3 = Pdi.vizinhos(imagem1, 2, false);
+			imagem3 = Pdi.ruidos(imagem1, 2, false);
 		}else if(x.isSelected()) {
-			imagem3 = Pdi.vizinhos(imagem1, 1, false);
+			imagem3 = Pdi.ruidos(imagem1, 1, false);
 		}
 			
 		atualizaImg3();
@@ -62,11 +62,11 @@ public class PrincipalController {
 	@FXML 
 	public void ruidosMediana() {
 		if(tres.isSelected()) {
-			imagem3 = Pdi.vizinhos(imagem1, 3, true);
+			imagem3 = Pdi.ruidos(imagem1, 3, true);
 		}else if(cruz.isSelected()) {
-			imagem3 = Pdi.vizinhos(imagem1, 2, true);
+			imagem3 = Pdi.ruidos(imagem1, 2, true);
 		}else if(x.isSelected()) {
-			imagem3 = Pdi.vizinhos(imagem1, 1, true);
+			imagem3 = Pdi.ruidos(imagem1, 1, true);
 		}
 	
 		atualizaImg3();

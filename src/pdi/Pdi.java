@@ -123,7 +123,7 @@ public class Pdi {
 		return wi;
 	}
 
-	public static Image vizinhos(Image img, int tipoVizinho, boolean isMediana) {
+	public static Image ruidos(Image img, int tipoVizinho, boolean isMediana) {
 		int w = (int)img.getWidth()-1;
 		int h = (int)img.getHeight()-1;
 		WritableImage wi = new WritableImage(w, h);
@@ -392,68 +392,11 @@ public class Pdi {
 						
 					}
 					
-					
-					
-					
 				}
 			}
 		}
 		return wi;
 	}
-	
-	
-//	public static void ruidosMedia(Image img, Pixel px, int tipoVizinho) {
-//		int w = (int)img.getWidth();
-//		int h = (int)img.getHeight();
-//		WritableImage wi = new WritableImage(w, h);
-//		PixelReader pr = img.getPixelReader();
-//		PixelWriter pw = wi.getPixelWriter();
-//		double red = 0, blue = 0, green = 0;
-//		Color cor = pr.getColor(px.posL, px.posC);
-//		if(tipoVizinho == 3) { // 3X3
-//			red = px.mediaRed(px.vizinhos3);
-//			blue = px.mediaBlue(px.vizinhos3);
-//			green = px.mediaGreen(px.vizinhos3);
-//		} else if(tipoVizinho == 2) { //Cruz
-//			red = px.mediaRed(px.vizinhosCruz);
-//			blue = px.mediaBlue(px.vizinhosCruz);
-//			green = px.mediaGreen(px.vizinhosCruz);
-//		} else if(tipoVizinho ==1) { // X
-//			red = px.mediaRed(px.vizinhosX);
-//			blue = px.mediaBlue(px.vizinhosX);
-//			green = px.mediaGreen(px.vizinhosX);
-//		}
-//		Color corNova = new Color(red, green, blue, cor.getOpacity());
-//		pw.setColor(px.posL, px.posC, corNova);
-//			
-//	}
-//	
-//	public static void ruidosMediana(Image img, Pixel px, int tipoVizinho) {
-//		int w = (int)img.getWidth();
-//		int h = (int)img.getHeight();
-//		WritableImage wi = new WritableImage(w, h);
-//		PixelReader pr = img.getPixelReader();
-//		PixelWriter pw = wi.getPixelWriter();
-//		double red = 0, blue = 0, green = 0;
-//		Color cor = pr.getColor(px.posL, px.posC);
-//		if(tipoVizinho == 3) { // 3X3
-//			red = px.medianaRed(px.vizinhos3);
-//			blue = px.medianaBlue(px.vizinhos3);
-//			green = px.medianaGreen(px.vizinhos3);
-//		} else if(tipoVizinho == 2) { //Cruz
-//			red = px.medianaRed(px.vizinhosCruz);
-//			blue = px.medianaBlue(px.vizinhosCruz);
-//			green = px.medianaGreen(px.vizinhosCruz);
-//		} else if(tipoVizinho ==1) { // X
-//			red = px.medianaRed(px.vizinhosX);
-//			blue = px.medianaBlue(px.vizinhosX);
-//			green = px.medianaGreen(px.vizinhosX);
-//		}
-//		Color corNova = new Color(red, green, blue, cor.getOpacity());
-//		pw.setColor(px.posL, px.posC, corNova);
-//			
-//	}
-
 
 	
 }

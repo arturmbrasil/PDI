@@ -1,2 +1,2 @@
 # PDI
-Projeto da disciplina de Processamento Digital de Imagens
+Projeto desenvolvido na disciplina de Processamento Digital de Imagens na Unisul.

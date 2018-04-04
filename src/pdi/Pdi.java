@@ -50,24 +50,72 @@ public class Pdi {
 		return wi;
 	}
 	
-//	public static int[] histograma(Image img, int canal) {
-//		int[] qt = new int [256];
-//		PixelReader pr = img.getPixelReader();
-//		int w = (int)img.getWidth();
-//		int h =(int)img.getHeight();
-//		for(int i = 0; i < w ; i++) {
-//			for(int j = 0; j < h ; j++) {
-//				if (canal == 1) 
-//					qt[(int)(pr.getColor(i, j).getRed()*255)]++;
-//				else if (canal == 2)
-//					qt[(int)(pr.getColor(i, j).getGreen()*255)]++;
-//				else
-//					qt[(int)(pr.getColor(i, j).getBlue()*255)]++;
-//				
-//			}
-//		}
-//		return qt;
-//	}
+	public static int[] histograma(Image img, int canal) {
+		int[] qt = new int [256];
+		PixelReader pr = img.getPixelReader();
+		int w = (int)img.getWidth();
+		int h =(int)img.getHeight();
+		for(int i = 0; i < w ; i++) {
+			for(int j = 0; j < h ; j++) {
+				if (canal == 1) 
+					qt[(int)(pr.getColor(i, j).getRed()*255)]++;
+				else if (canal == 2)
+					qt[(int)(pr.getColor(i, j).getGreen()*255)]++;
+				else
+					qt[(int)(pr.getColor(i, j).getBlue()*255)]++;
+				
+			}
+		}
+		return qt;
+	}
+	
+	public static int[] histogramaAc(int[] hist) {
+		int[] ret = new int [hist.length];
+		int v1 = hist[0];
+			for(int i = 0; i < hist.length-1 ; i++) {
+				ret[i] = v1;
+				v1 += hist[i+1];
+			}
+		return ret;
+	}
+	
+	public static Image equalizar(Image img) {
+		int w = (int)img.getWidth();
+		int h = (int)img.getHeight();
+		WritableImage wi = new WritableImage(w, h);
+		PixelReader pr = img.getPixelReader();
+		PixelWriter pw = wi.getPixelWriter();
+		
+		int[] histR = histograma(img, 1); //histograma red
+		int[] histG = histograma(img, 2); //histograma green
+		int[] histB = histograma(img, 3); //histograma blue
+		int[] hacR = histogramaAc(histR); // histograma acumulado red
+		int[] hacG = histogramaAc(histG); // histograma acumulado green
+		int[] hacB = histogramaAc(histB); // histograma acumulado blue
+		
+		double n = w * h;
+		
+		for(int i=0; i<w; i++) {
+			for(int j=0; j<h; j++) {
+				Color cor = pr.getColor(i, j);
+
+				double intensidadeR = cor.getRed() * 255;
+				double intensidadeG = cor.getGreen() * 255;
+				double intensidadeB = cor.getBlue() * 255;
+				
+				double red = ((254.0/n) * hacR[(int) (intensidadeR)]) / 255;
+				double green = ((254.0/n) * hacG[(int) (intensidadeG)]) / 255;
+				double blue = ((254.0/n) * hacB[(int) (intensidadeB)]) / 255;
+				
+				Color corNova = new Color(red, green, blue, cor.getOpacity());
+				pw.setColor(i, j, corNova);
+			}
+		}
+		
+		return wi;
+		
+	}
+
 	
 	public static int[] histogramaUnico(Image img) {
 		int[] qt = new int [256];

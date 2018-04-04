@@ -76,6 +76,13 @@ public class PrincipalController {
 		}
 	}
 	
+	@FXML
+	public void equalizarHistograma() {
+		imagem3 = Pdi.equalizar(imagem1);
+		atualizaImg3();
+
+	}
+	
 	@FXML 
 	public void ruidosMedia() {
 		if(tres.isSelected()) {

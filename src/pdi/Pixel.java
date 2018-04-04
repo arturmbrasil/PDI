@@ -4,9 +4,9 @@ public class Pixel {
 	public double red, blue, green;
 	public int posL, posC; //linha e coluna
 
-	public Pixel[] vizinhos3 = new Pixel[8];
-	public Pixel[] vizinhosCruz = new Pixel[4];
-	public Pixel[] vizinhosX = new Pixel[4];
+	public Pixel[] vizinhos3 = new Pixel[9];
+	public Pixel[] vizinhosCruz = new Pixel[5];
+	public Pixel[] vizinhosX = new Pixel[5];
 	
 	public Pixel(double red, double blue, double green, int posC, int posL) {
 		super();
@@ -26,18 +26,21 @@ public class Pixel {
 	public double mediaRed(Pixel[] v) {
 		double mediaR = 0;
 		int cont = 0;
+		v[v.length-1] = this;
+
 		for(Pixel p : v) {
 			if(p != null) {
 				mediaR += p.getRed();
 				cont += 1;
 			}
 		}
-		return mediaR / cont;
+		return (mediaR + this.getRed())/ (cont+1);
 	}
 	
 	public double mediaBlue(Pixel[] v) {
 		double mediaB = 0;
 		int cont = 0;
+		v[v.length-1] = this;
 
 		for(Pixel p : v) {
 			if(p != null) {
@@ -45,12 +48,14 @@ public class Pixel {
 				cont += 1;
 			}
 		}
-		return mediaB / cont;
+		return (mediaB + this.getBlue())/ (cont+1);
 	}
 	
 	public double mediaGreen(Pixel[] v) {
 		double mediaG = 0;
-		int cont = 0;
+		int cont = 0;		
+		v[v.length-1] = this;
+
 
 		for(Pixel p : v) {
 			if(p != null) {
@@ -58,10 +63,11 @@ public class Pixel {
 				cont += 1;
 			}
 		}
-		return mediaG / cont;
+		return (mediaG + this.getGreen())/ (cont+1);
 	}
 	
 	public double medianaRed(Pixel[] v) {
+		v[v.length-1] = this;
 		ordenaVetorRed(v);
 		int cont = 0;
 		for(Pixel p : v) {
@@ -72,6 +78,7 @@ public class Pixel {
 	}
 	
 	public double medianaBlue(Pixel[] v) {
+		v[v.length-1] = this;
 		ordenaVetorBlue(v);
 		int cont = 0;
 		for(Pixel p : v) {
@@ -82,6 +89,7 @@ public class Pixel {
 	}
 	
 	public double medianaGreen(Pixel[] v) {
+		v[v.length-1] = this;
 		ordenaVetorGreen(v);
 		int cont = 0;
 		for(Pixel p : v) {
@@ -94,13 +102,17 @@ public class Pixel {
 	public void ordenaVetorRed(Pixel[] v) {
 		Pixel aux = null;
 		for (int i = 0; i < v.length; i++) { 
-			for (int j = 0; j < v.length; j++) {
-				if(v[i] != null && v[j] != null) {
-					if (v[i].red < v[j].red) { 
-						aux = v[i]; 
-						v[i] = v[j]; 
-						v[j] = aux; 
+			for (int j = 0; j < v.length - 1; j++) {
+				if(v[j] != null && v[j+1] != null) {
+					if (v[j].red > v[j+1].red) { 
+						aux = v[j]; 
+						v[j] = v[j+1]; 
+						v[j+1] = aux; 
 					} 					
+				}
+				else if(v[j] == null && v[j+1] != null) {
+					v[j] = v[i+1]; 
+					v[j+1] = null; 
 				}
 			}
 		}
@@ -109,13 +121,17 @@ public class Pixel {
 	public void ordenaVetorBlue(Pixel[] v) {
 		Pixel aux = null;
 		for (int i = 0; i < v.length; i++) { 
-			for (int j = 0; j < v.length; j++) {
-				if(v[i] != null && v[j] != null) {
-					if (v[i].blue < v[j].blue) { 
-						aux = v[i]; 
-						v[i] = v[j]; 
-						v[j] = aux; 
-					} 
+			for (int j = 0; j < v.length - 1; j++) {
+				if(v[j] != null && v[j+1] != null) {
+					if (v[j].blue > v[j+1].blue) { 
+						aux = v[j]; 
+						v[j] = v[j+1]; 
+						v[j+1] = aux; 
+					} 					
+				}
+				else if(v[j] == null && v[j+1] != null) {
+					v[j] = v[i+1]; 
+					v[j+1] = null; 
 				}
 			}
 		}
@@ -124,13 +140,17 @@ public class Pixel {
 	public void ordenaVetorGreen(Pixel[] v) {
 		Pixel aux = null;
 		for (int i = 0; i < v.length; i++) { 
-			for (int j = 0; j < v.length; j++) {
-				if(v[i] != null && v[j] != null) {
-					if (v[i].green < v[j].green) { 
-						aux = v[i]; 
-						v[i] = v[j]; 
-						v[j] = aux; 
-					}
+			for (int j = 0; j < v.length - 1; j++) {
+				if(v[j] != null && v[j+1] != null) {
+					if (v[j].green > v[j+1].green) { 
+						aux = v[j]; 
+						v[j] = v[j+1]; 
+						v[j+1] = aux; 
+					} 					
+				}
+				else if(v[j] == null && v[j+1] != null) {
+					v[j] = v[i+1]; 
+					v[j+1] = null; 
 				}
 			}
 		}

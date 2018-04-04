@@ -200,7 +200,7 @@
                                           <Insets bottom="5.0" left="5.0" right="40.0" top="5.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <Button mnemonicParsing="false" text="Histograma">
+                                    <Button mnemonicParsing="false" onAction="#gerarHistograma" text="Histograma">
                                        <font>
                                           <Font name="System Bold" size="30.0" />
                                        </font>

@@ -95,6 +95,22 @@ public class Pdi {
 		
 		double n = w * h;
 		
+		//Calculo L
+		int qtR = 255;
+		int qtG = 255;
+		int qtB = 255;
+		
+		for(int i = 0; i < 255; i++) {
+			if(histR[i] == 0) 
+				qtR--;
+			if(histG[i] == 0) 
+				qtG--;
+			if(histB[i] == 0) 
+				qtB--;
+		}
+
+		
+		//Aplica a formula ((L - 1)/N) * HistAc
 		for(int i=0; i<w; i++) {
 			for(int j=0; j<h; j++) {
 				Color cor = pr.getColor(i, j);
@@ -103,9 +119,9 @@ public class Pdi {
 				double intensidadeG = cor.getGreen() * 255;
 				double intensidadeB = cor.getBlue() * 255;
 				
-				double red = ((254.0/n) * hacR[(int) (intensidadeR)]) / 255;
-				double green = ((254.0/n) * hacG[(int) (intensidadeG)]) / 255;
-				double blue = ((254.0/n) * hacB[(int) (intensidadeB)]) / 255;
+				double red = (((qtR-1)/n) * hacR[(int) (intensidadeR)]) / 255;
+				double green = (((qtG-1)/n) * hacG[(int) (intensidadeG)]) / 255;
+				double blue = (((qtB-1)/n) * hacB[(int) (intensidadeB)]) / 255;
 				
 				Color corNova = new Color(red, green, blue, cor.getOpacity());
 				pw.setColor(i, j, corNova);

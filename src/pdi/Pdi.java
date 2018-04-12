@@ -165,7 +165,7 @@ public class Pdi {
 		
 		int partHist = histR.length / divisoes;
 		int controle = 0;
-		
+				
 		ArrayList<Integer> maiorIntensidadeR = new ArrayList<Integer>();
 		ArrayList<Integer> maiorIntensidadeG = new ArrayList<Integer>();
 		ArrayList<Integer> maiorIntensidadeB = new ArrayList<Integer>();
@@ -179,7 +179,7 @@ public class Pdi {
 			maiorIntensidadeB.add(0);
 			posicaoR.add(0);
 			posicaoG.add(0);
-			posicaoB.add(0);
+			posicaoB.add(0);	
 		}
 		
 		for(int i=0; i<256; i++) {
@@ -202,7 +202,6 @@ public class Pdi {
 				controle++;
 				i--;
 			}
-
 		}
 		
 		partHist = histR.length / divisoes;
@@ -221,8 +220,8 @@ public class Pdi {
 				int controleB = retornaControle(divisoes, partHist, (int)intensidadeB);
 				
 				double red = posicaoR.get(controleR)/255.0;
-				double green = posicaoG.get(controleB)/255.0;
-				double blue = posicaoB.get(controleG)/255.0;
+				double green = posicaoG.get(controleG)/255.0;
+				double blue = posicaoB.get(controleB)/255.0;
 				
 				Color corNova = new Color(red, green, blue, cor.getOpacity());
 				pw.setColor(i, j, corNova);
@@ -230,7 +229,7 @@ public class Pdi {
 		}
 		return ruidos(wi, 3, true);
 		//return wi;
-	}	
+	}
 	
 	public static int retornaControle(int divisoes, int partHist, int pos) {
 		int controle = 0;
@@ -246,9 +245,7 @@ public class Pdi {
 				k--;
 			}
 		}
-		
 		return controle;
-		
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })

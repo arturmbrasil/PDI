@@ -1,5 +1,7 @@
 package pdi;
 
+import java.util.ArrayList;
+
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -146,6 +148,107 @@ public class Pdi {
 			}
 		}
 		return qt;
+	}
+	
+	public static Image segmentar(Image img, int divisoes) {
+		int w = (int)img.getWidth();
+		int h = (int)img.getHeight();
+		WritableImage wi = new WritableImage(w, h);
+		PixelReader pr = img.getPixelReader();
+		PixelWriter pw = wi.getPixelWriter();
+		
+		int[] histR = histograma(img, 1); //histograma red
+		int[] histG = histograma(img, 2); //histograma green
+		int[] histB = histograma(img, 3); //histograma blue
+		
+		//int[] histU = histogramaUnico(img);
+		
+		int partHist = histR.length / divisoes;
+		int controle = 0;
+		
+		ArrayList<Integer> maiorIntensidadeR = new ArrayList<Integer>();
+		ArrayList<Integer> maiorIntensidadeG = new ArrayList<Integer>();
+		ArrayList<Integer> maiorIntensidadeB = new ArrayList<Integer>();
+		ArrayList<Integer> posicaoR = new ArrayList<Integer>();
+		ArrayList<Integer> posicaoG = new ArrayList<Integer>();
+		ArrayList<Integer> posicaoB = new ArrayList<Integer>();
+				
+		for (int a=0; a<5; a++) {
+			maiorIntensidadeR.add(0);
+			maiorIntensidadeG.add(0);
+			maiorIntensidadeB.add(0);
+			posicaoR.add(0);
+			posicaoG.add(0);
+			posicaoB.add(0);
+		}
+		
+		for(int i=0; i<256; i++) {
+			if(i < partHist && controle < divisoes) {
+				if(histR[i] > maiorIntensidadeR.get(controle)) {
+					maiorIntensidadeR.set(controle, histR[i]);
+					posicaoR.set(controle, i);
+				}
+				if(histG[i] > maiorIntensidadeG.get(controle)) {
+					maiorIntensidadeG.set(controle, histG[i]);
+					posicaoG.set(controle, i);
+				}
+				if(histB[i] > maiorIntensidadeB.get(controle)) {
+					maiorIntensidadeB.set(controle, histB[i]);
+					posicaoB.set(controle, i);
+				}
+			}
+			else if(i > partHist) {
+				partHist = partHist*2;
+				controle++;
+				i--;
+			}
+
+		}
+		
+		partHist = histR.length / divisoes;
+		
+		for(int i=0; i<w; i++) {
+			for(int j=0; j<h; j++) {
+				Color cor = pr.getColor(i, j);
+
+				double intensidadeR = cor.getRed() * 255;
+				double intensidadeG = cor.getGreen() * 255;
+				double intensidadeB = cor.getBlue() * 255;
+								
+				//Retorna controle = parte da divisao do histograma
+				int controleR = retornaControle(divisoes, partHist, (int)intensidadeR);
+				int controleG = retornaControle(divisoes, partHist, (int)intensidadeG);
+				int controleB = retornaControle(divisoes, partHist, (int)intensidadeB);
+				
+				double red = posicaoR.get(controleR)/255.0;
+				double green = posicaoG.get(controleB)/255.0;
+				double blue = posicaoB.get(controleG)/255.0;
+				
+				Color corNova = new Color(red, green, blue, cor.getOpacity());
+				pw.setColor(i, j, corNova);
+			}
+		}
+		return ruidos(wi, 3, true);
+		//return wi;
+	}	
+	
+	public static int retornaControle(int divisoes, int partHist, int pos) {
+		int controle = 0;
+		for(int k=0; k<256; k++) {
+			if(k < partHist && controle < divisoes) {
+				if(pos < partHist) {
+					k = 256;
+				}
+			}
+			else if(k > partHist) {
+				partHist = partHist*2;
+				controle++;
+				k--;
+			}
+		}
+		
+		return controle;
+		
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })

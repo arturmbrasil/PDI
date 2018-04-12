@@ -41,6 +41,7 @@ public class PrincipalController {
 	@FXML TextField tfRed;
 	@FXML TextField tfGreen;
 	@FXML TextField tfBlue;
+	@FXML TextField tfSegmentacao;
 	
 	@FXML Slider slider;
 	
@@ -79,6 +80,13 @@ public class PrincipalController {
 	@FXML
 	public void equalizarHistograma() {
 		imagem3 = Pdi.equalizar(imagem1);
+		atualizaImg3();
+
+	}
+	
+	@FXML
+	public void segmentacao() {
+		imagem3 = Pdi.segmentar(imagem1, Integer.parseInt(tfSegmentacao.getText()));
 		atualizaImg3();
 
 	}

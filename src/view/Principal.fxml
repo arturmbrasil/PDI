@@ -207,6 +207,50 @@
                         <Insets left="5.0" right="5.0" />
                      </VBox.margin>
                   </TitledPane>
+                  <TitledPane expanded="false" layoutX="15.0" layoutY="267.0" text="Exercicios">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <children>
+                              <VBox alignment="TOP_CENTER" prefHeight="43.0" prefWidth="227.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#inverter" text="Inverter" />
+                                    <Button layoutX="81.0" layoutY="10.0" mnemonicParsing="false" onAction="#rotacionar" text="Rotacionar" />
+                                    <Button layoutX="81.0" layoutY="37.0" mnemonicParsing="false" onAction="#borda3px" text="Borda 3px" />
+                                    <Button layoutX="83.0" layoutY="64.0" mnemonicParsing="false" onAction="#aumentar" text="Aumentar (pixel X 4)" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </VBox.margin>
+                  </TitledPane>
+                  <TitledPane expanded="false" layoutX="15.0" layoutY="294.0" text="Adição e Subtração">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <children>
+                              <VBox alignment="TOP_CENTER" prefHeight="43.0" prefWidth="227.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#adicao" text="Adição" />
+                                    <TextField fx:id="pcimg1" alignment="TOP_CENTER" prefHeight="27.0" prefWidth="80.0" promptText="\% Imagem 1" />
+                                    <TextField fx:id="pcimg2" alignment="TOP_CENTER" prefHeight="27.0" prefWidth="80.0" promptText="\% Imagem 2" />
+                                    <Button layoutX="81.0" layoutY="37.0" mnemonicParsing="false" onAction="#subtracao" text="Subtração" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </VBox.margin>
+                  </TitledPane>
                </children>
             </VBox>
          </left>
@@ -283,7 +327,7 @@
                                             <content>
                                               <AnchorPane>
                                                    <children>
-                                                      <ImageView fx:id="imgv1" fitHeight="500.0" fitWidth="350.0" onMouseExited="#limpaRGB" onMouseMoved="#rastrearImg" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                      <ImageView fx:id="imgv1" fitHeight="500.0" fitWidth="350.0" onMouseExited="#limpaRGB" onMouseMoved="#rastrearImg" onMousePressed="#clicou" onMouseReleased="#soltou" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                    </children>
                                                 </AnchorPane>
                                             </content>

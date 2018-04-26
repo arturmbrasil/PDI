@@ -43,6 +43,9 @@ public class PrincipalController {
 	@FXML TextField tfBlue;
 	@FXML TextField tfSegmentacao;
 	
+	@FXML TextField pcimg1;
+	@FXML TextField pcimg2;
+	
 	@FXML Slider slider;
 	
 	@FXML ToggleGroup vizinho;
@@ -52,6 +55,7 @@ public class PrincipalController {
 	@FXML RadioButton tres;
 	
 	private Image imagem1, imagem2, imagem3;
+	private double clicoux, clicouy, soltoux, soltouy;
 	
 	@FXML
 	public void gerarHistograma(ActionEvent event) {
@@ -81,14 +85,64 @@ public class PrincipalController {
 	public void equalizarHistograma() {
 		imagem3 = Pdi.equalizar(imagem1);
 		atualizaImg3();
-
+	}
+	
+	@FXML
+	public void adicao() {
+		if(pcimg1.getText().isEmpty() || pcimg2.getText().isEmpty()) {
+			exibeMsg("Erro", "Valores Inválidos", "A soma dos valores deve ser igual a 100", AlertType.ERROR);
+			return;
+		}
+		Double somaTxts = Double.parseDouble(pcimg1.getText()) + Double.parseDouble(pcimg2.getText());
+		if((somaTxts != 100)) {
+			exibeMsg("Erro", "Valores Inválidos", "A soma dos valores deve ser igual a 100", AlertType.ERROR);
+			return;
+		} else {
+		imagem3 = Pdi.adicao(imagem1, imagem2, Double.parseDouble(pcimg1.getText()), Double.parseDouble(pcimg2.getText()));
+		atualizaImg3();
+		}
+	}
+	
+	@FXML
+	public void subtracao() {
+		imagem3 = Pdi.subtracao(imagem1, imagem2);
+		atualizaImg3();
 	}
 	
 	@FXML
 	public void segmentacao() {
 		imagem3 = Pdi.segmentar(imagem1, Integer.parseInt(tfSegmentacao.getText()));
 		atualizaImg3();
-
+	}
+	
+	@FXML
+	public void inverter() {
+		imagem3 = Pdi.inverte(imagem1);
+		atualizaImg3();
+	}
+	
+	@FXML
+	public void rotacionar() {
+		imagem3 = Pdi.rotacionar(imagem1);
+		atualizaImg3();
+	}
+	
+	@FXML
+	public void borda3px() {
+		imagem3 = Pdi.borda3px(imagem1);
+		atualizaImg3();
+	}
+	
+	@FXML
+	public void aumentar() {
+		imagem3 = Pdi.aumentar(imagem1);
+		atualizaImg3();
+		
+		System.out.println(imagem1.getWidth());
+		System.out.println(imagem1.getHeight());
+		System.out.println(imagem3.getWidth());
+		System.out.println(imagem3.getHeight());
+		
 	}
 	
 	@FXML 
@@ -192,7 +246,25 @@ public class PrincipalController {
 			verificaCor(imgview.getImage(), (int)evt.getX(), (int)evt.getY());
 		}
 	}
-
+	
+	@FXML
+	public void clicou(MouseEvent evt) {
+		clicoux = evt.getX();
+		clicouy = evt.getY();
+	}
+	
+	@FXML
+	public void soltou(MouseEvent evt) {
+		soltoux = evt.getX();
+		soltouy = evt.getY();
+		ImageView iv = (ImageView) evt.getTarget();
+		if(iv.getImage() != null) {
+			imagem3 = Pdi.desenho(clicoux, clicouy, soltoux, soltouy, imagem1);
+			atualizaImg3();
+		}
+	}
+	
+	
 	@FXML
 	private void limpaRGB() {
 		lblR.setText("R: 000");

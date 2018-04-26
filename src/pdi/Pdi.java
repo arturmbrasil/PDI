@@ -52,6 +52,214 @@ public class Pdi {
 		return wi;
 	}
 	
+	public static Image adicao(Image img1, Image img2, Double pc1, Double pc2) {
+		int w1 = (int)img1.getWidth();
+		int h1 = (int)img1.getHeight();
+		
+		int w2 = (int)img2.getWidth();
+		int h2 = (int)img2.getHeight();
+		
+		int w = Math.min(w1, w2);
+		int h = Math.min(h1, h2);		
+		
+		PixelReader pr1 = img1.getPixelReader();
+		PixelReader pr2 = img2.getPixelReader();
+		pc1 = pc1/100;
+		pc2 = pc2/100;
+		
+		WritableImage wi = new WritableImage(w, h);			
+		PixelWriter pw = wi.getPixelWriter();
+		for(int i=0; i<w; i++) {
+			for(int j=0; j<h; j++) {
+				Color cor1 = pr1.getColor(i, j);
+				Color cor2 = pr2.getColor(i, j);
+				
+				Color corNova = new Color(cor1.getRed()*pc1 + cor2.getRed()*pc2, cor1.getGreen()*pc1 + cor2.getGreen()*pc2, cor1.getBlue()*pc1 + cor2.getBlue()*pc2, cor1.getOpacity());
+				pw.setColor(i, j, corNova);
+			}
+		}
+
+		return wi;
+	}
+	
+	public static Image subtracao(Image img1, Image img2) {
+		int w1 = (int)img1.getWidth();
+		int h1 = (int)img1.getHeight();
+		
+		int w2 = (int)img2.getWidth();
+		int h2 = (int)img2.getHeight();
+
+		int w = Math.min(w1, w2);
+		int h = Math.min(h1, h2);		
+		
+		PixelReader pr1 = img1.getPixelReader();
+		PixelReader pr2 = img2.getPixelReader();
+		
+		WritableImage wi = new WritableImage(w, h);			
+		PixelWriter pw = wi.getPixelWriter();
+		for(int i=0; i<w; i++) {
+			for(int j=0; j<h; j++) {
+				Color cor1 = pr1.getColor(i, j);
+				Color cor2 = pr2.getColor(i, j);
+				double nRed = cor1.getRed() - cor2.getRed();
+				double nGreen = cor1.getGreen() - cor2.getGreen();
+				double nBlue = cor1.getBlue() - cor2.getBlue();
+				if(nRed<0)
+					nRed = nRed * (-1);
+				if(nGreen<0)
+					nGreen = nGreen * (-1);
+				if(nBlue<0)
+					nBlue = nBlue * (-1);
+				Color corNova = new Color(nRed, nGreen, nBlue, cor1.getOpacity());
+				pw.setColor(i, j, corNova);
+			}
+		}
+
+		return wi;
+	}
+	
+	public static Image inverte(Image img) {
+		int w = (int)img.getWidth();
+		int h = (int)img.getHeight();
+		WritableImage wi = new WritableImage(h, w);
+		PixelReader pr = img.getPixelReader();
+		PixelWriter pw = wi.getPixelWriter();
+		
+		for(int i=0; i<w; i++) {
+			for(int j=0; j<h; j++) {
+				Color cor = pr.getColor(i, j);
+				Color corNova = new Color(cor.getRed(), cor.getGreen(), cor.getBlue(), cor.getOpacity());
+				pw.setColor(j, i, corNova);
+			}
+		}
+		return wi;
+	}
+	
+	public static Image desenho(Double clickX, Double clickY, Double soltouX, Double soltouY, Image img) {
+		int w = (int)img.getWidth();
+		int h = (int)img.getHeight();
+		WritableImage wi = new WritableImage(w, h);
+		PixelReader pr = img.getPixelReader();
+		PixelWriter pw = wi.getPixelWriter();
+		
+		for(int i=0; i<w; i++) {
+			for(int j=0; j<h; j++) {
+				//if(((i == clickX) & (i <= soltouX)) || ((j == clickY) & (j <= soltouY))) {
+				//if( ((i==clickX || i == soltouX) & (i >= clickX & i <= soltouX)) || ((j==clickY || j == soltouY) & (j >= clickY & j <= soltouY)) ) {
+
+				Color cor = pr.getColor(i, j);
+				pw.setColor(i, j, cor);
+				
+				if(i==clickX || i == soltouX) {
+					if(j >= clickY & j <= soltouY ) {
+						Color corNova = new Color(1, 0, 0, 1);
+						pw.setColor(i, j, corNova);						
+					}
+				}
+				if(j==clickY || j == soltouY) {
+					if(i > clickX & i < soltouX ) {
+						Color corNova = new Color(1, 0, 0, 1);
+						pw.setColor(i, j, corNova);						
+					}
+				}
+			
+			}
+		}
+		return wi;
+	}
+	
+	public static Image aumentar(Image img) {
+		int w = (int)img.getWidth() * 2;
+		int h = (int)img.getHeight() * 2;
+		
+		int wOld = (int)img.getWidth();
+		int hOld= (int)img.getHeight();
+		
+		WritableImage wi = new WritableImage(w, h);
+		PixelReader pr = img.getPixelReader();
+		PixelWriter pw = wi.getPixelWriter();
+		
+		ArrayList<Color> cores = new ArrayList<Color>();
+		for(int i=0; i<wOld; i++) {
+			for(int j=0; j<hOld; j++) {
+				Color cor = pr.getColor(i, j);
+				cores.add(cor);
+			}
+		}
+		System.out.println("largura: "+w);
+		System.out.println("altura: "+h);
+
+		int contador = 0;
+		for(int i=0; i<w; i = i+2) {
+			for(int j=0; j<h; j++) {
+				if (contador<cores.size()) {
+					double nred = cores.get(contador).getRed();
+					double ngreen = cores.get(contador).getGreen();
+					double nblue = cores.get(contador).getBlue();
+					
+					Color nova = new Color(nred,ngreen, nblue, 1.0);
+					pw.setColor(i, j, nova);
+					pw.setColor(i+1, j, nova);
+						
+					if(j%2!=0) {
+						contador++;
+					}
+				}	
+			}
+		}
+	
+	
+		return wi;
+	}
+	
+	public static Image borda3px(Image img) {
+		int w = (int)img.getWidth();
+		int h = (int)img.getHeight();
+		WritableImage wi = new WritableImage(w, h);
+		PixelReader pr = img.getPixelReader();
+		PixelWriter pw = wi.getPixelWriter();
+		
+		System.out.println("largura: "+w);
+		System.out.println("altura: "+h);
+		for(int i=0; i<w; i++) {
+			for(int j=0; j<h; j++) {
+				if(i<3 || j<3 || i>w-4 || j>h-4) {
+					Color corNova = new Color(1, 0, 0, 1);
+					pw.setColor(i, j, corNova);
+				}else{
+					Color cor = pr.getColor(i, j);
+					//Color corNova = new Color(cor.getRed(), cor.getGreen(), cor.getBlue(), cor.getOpacity());
+					pw.setColor(i, j, cor);					
+				}
+			}
+		}
+		
+		return wi;
+	}
+	
+	
+	
+	public static Image rotacionar(Image img) {
+		int w = (int)img.getWidth();
+		int h = (int)img.getHeight();
+		WritableImage wi = new WritableImage(h, w);
+		PixelReader pr = img.getPixelReader();
+		PixelWriter pw = wi.getPixelWriter();
+		
+		System.out.println("largura: "+w);
+		System.out.println("altura: "+h);
+		
+		for(int i=0; i<w; i++) {
+			for(int j=0; j<h; j++) {
+				Color cor = pr.getColor(i, j);
+				Color corNova = new Color(cor.getRed(), cor.getGreen(), cor.getBlue(), cor.getOpacity());
+				pw.setColor(h-1-j, i, corNova);
+			}
+		}
+		
+		return wi;
+	}
+	
 	public static int[] histograma(Image img, int canal) {
 		int[] qt = new int [256];
 		PixelReader pr = img.getPixelReader();

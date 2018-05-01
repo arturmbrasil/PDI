@@ -186,9 +186,7 @@ public class Pdi {
 				cores.add(cor);
 			}
 		}
-		System.out.println("largura: "+w);
-		System.out.println("altura: "+h);
-
+		
 		int contador = 0;
 		for(int i=0; i<w; i = i+2) {
 			for(int j=0; j<h; j++) {
@@ -212,6 +210,41 @@ public class Pdi {
 		return wi;
 	}
 	
+	
+	public static Image diminuir(Image img) { //diminui 40 px de altura e largura
+		int w = (int)img.getWidth() - 40;
+		int h = (int)img.getHeight() - 40;
+		
+		int wOld = (int)img.getWidth();
+		int hOld= (int)img.getHeight();
+		
+		WritableImage wi = new WritableImage(w, h);
+		PixelReader pr = img.getPixelReader();
+		PixelWriter pw = wi.getPixelWriter();
+		
+		ArrayList<Color> cores = new ArrayList<Color>();
+		for(int i=20; i<wOld - 20; i++) {
+			for(int j=20; j<hOld - 20; j++) {	
+					Color cor = pr.getColor(i, j);
+					cores.add(cor);
+			}
+		}
+		
+		int contador = 0;
+		for(int i=0; i<w; i++) {
+			for(int j=0; j<h; j++) {
+				Color cor = cores.get(contador);
+				pw.setColor(i, j, cor);					
+
+				contador++;
+			}
+		}
+		
+	
+		return wi;
+	}
+	
+	
 	public static Image borda3px(Image img) {
 		int w = (int)img.getWidth();
 		int h = (int)img.getHeight();
@@ -219,8 +252,6 @@ public class Pdi {
 		PixelReader pr = img.getPixelReader();
 		PixelWriter pw = wi.getPixelWriter();
 		
-		System.out.println("largura: "+w);
-		System.out.println("altura: "+h);
 		for(int i=0; i<w; i++) {
 			for(int j=0; j<h; j++) {
 				if(i<3 || j<3 || i>w-4 || j>h-4) {
@@ -245,9 +276,6 @@ public class Pdi {
 		WritableImage wi = new WritableImage(h, w);
 		PixelReader pr = img.getPixelReader();
 		PixelWriter pw = wi.getPixelWriter();
-		
-		System.out.println("largura: "+w);
-		System.out.println("altura: "+h);
 		
 		for(int i=0; i<w; i++) {
 			for(int j=0; j<h; j++) {

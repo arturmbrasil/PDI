@@ -220,6 +220,7 @@
                                     <Button layoutX="81.0" layoutY="10.0" mnemonicParsing="false" onAction="#rotacionar" text="Rotacionar" />
                                     <Button layoutX="81.0" layoutY="37.0" mnemonicParsing="false" onAction="#borda3px" text="Borda 3px" />
                                     <Button layoutX="83.0" layoutY="64.0" mnemonicParsing="false" onAction="#aumentar" text="Aumentar (pixel X 4)" />
+                                    <Button layoutX="51.0" layoutY="91.0" mnemonicParsing="false" onAction="#diminuir" text="Diminuir 5pixels" />
                                  </children>
                               </VBox>
                            </children>

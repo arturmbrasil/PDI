@@ -137,12 +137,12 @@ public class PrincipalController {
 	public void aumentar() {
 		imagem3 = Pdi.aumentar(imagem1);
 		atualizaImg3();
-		
-		System.out.println(imagem1.getWidth());
-		System.out.println(imagem1.getHeight());
-		System.out.println(imagem3.getWidth());
-		System.out.println(imagem3.getHeight());
-		
+	}
+	
+	@FXML
+	public void diminuir() {
+		imagem3 = Pdi.diminuir(imagem1);
+		atualizaImg3();
 	}
 	
 	@FXML 

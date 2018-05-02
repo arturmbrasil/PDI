@@ -145,25 +145,6 @@
                         <Insets left="5.0" right="5.0" />
                      </VBox.margin>
                   </TitledPane>
-                  <TitledPane expanded="false" layoutX="15.0" layoutY="186.0" text="Desafio">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0">
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                           <children>
-                              <VBox alignment="TOP_CENTER" prefHeight="43.0" prefWidth="227.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <Button mnemonicParsing="false" onAction="#desafio1" text="Desafio 1" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </AnchorPane>
-                     </content>
-                     <VBox.margin>
-                        <Insets left="5.0" right="5.0" />
-                     </VBox.margin>
-                  </TitledPane>
                   <TitledPane expanded="false" layoutX="15.0" layoutY="213.0" text="Equalização Histograma">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0">
@@ -216,12 +197,40 @@
                            <children>
                               <VBox alignment="TOP_CENTER" prefHeight="43.0" prefWidth="227.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#inverter" text="Inverter" />
-                                    <Button layoutX="81.0" layoutY="10.0" mnemonicParsing="false" onAction="#rotacionar" text="Rotacionar" />
-                                    <Button layoutX="81.0" layoutY="37.0" mnemonicParsing="false" onAction="#borda3px" text="Borda 3px" />
-                                    <Button layoutX="83.0" layoutY="64.0" mnemonicParsing="false" onAction="#aumentar" text="Aumentar (pixel X 4)" />
-                                    <Button layoutX="51.0" layoutY="91.0" mnemonicParsing="false" onAction="#diminuir" text="Diminuir 5pixels" />
-                                    <Button layoutX="65.0" layoutY="118.0" mnemonicParsing="false" onAction="#quadradoOuCirculo" text="Quadrado ou Circulo?" />
+                                    <Button mnemonicParsing="false" onAction="#inverter" text="Inverter">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin></Button>
+                                    <Button layoutX="81.0" layoutY="10.0" mnemonicParsing="false" onAction="#rotacionar" text="Rotacionar">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin></Button>
+                                    <Button layoutX="81.0" layoutY="37.0" mnemonicParsing="false" onAction="#borda3px" text="Borda 3px">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin></Button>
+                                    <Button layoutX="83.0" layoutY="64.0" mnemonicParsing="false" onAction="#aumentar" text="Aumentar (pixel X 4)">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin></Button>
+                                    <Button layoutX="51.0" layoutY="91.0" mnemonicParsing="false" onAction="#diminuir" text="Diminuir 5pixels">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin></Button>
+                                    <Button layoutX="65.0" layoutY="118.0" mnemonicParsing="false" onAction="#quadradoOuCirculo" text="Quadrado ou Circulo?">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#filtrosVertical" text="Varios Filtros Vertical">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin></Button>
+                                    <Button mnemonicParsing="false" onAction="#filtrosHorizontal" text="Varios Filtros Horizontal">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
                                  </children>
                               </VBox>
                            </children>
@@ -244,6 +253,26 @@
                                     <TextField fx:id="pcimg1" alignment="TOP_CENTER" prefHeight="27.0" prefWidth="80.0" promptText="\% Imagem 1" />
                                     <TextField fx:id="pcimg2" alignment="TOP_CENTER" prefHeight="27.0" prefWidth="80.0" promptText="\% Imagem 2" />
                                     <Button layoutX="81.0" layoutY="37.0" mnemonicParsing="false" onAction="#subtracao" text="Subtração" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </VBox.margin>
+                  </TitledPane>
+                  <TitledPane expanded="false" layoutX="15.0" layoutY="294.0" text="Marcar Imagem">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <children>
+                              <VBox alignment="TOP_CENTER" prefHeight="43.0" prefWidth="227.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Button layoutX="51.0" layoutY="91.0" mnemonicParsing="false" onAction="#marcarBorda" text="Borda" />
+                                    <Button layoutX="65.0" layoutY="118.0" mnemonicParsing="false" onAction="#marcarFiltro" text="Filtro" />
                                  </children>
                               </VBox>
                            </children>

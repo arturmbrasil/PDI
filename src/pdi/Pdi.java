@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
 
 public class Pdi {
 	
-	public static Image desafio1(Image img) {
+	public static Image filtrosVertical(Image img) { //vertical
 		int w = (int)img.getWidth();
 		int h = (int)img.getHeight();
 		WritableImage wi = new WritableImage(w, h);
@@ -39,6 +39,44 @@ public class Pdi {
 					pw.setColor(i, j, newCor);
 				}
 				else if(i>(pedacoImg*2)){ //Negativa na ultima parte da imagem
+					Color cor = pr.getColor(i, j);
+					Double red = 1 - cor.getRed();
+					Double green = 1 - cor.getGreen();
+					Double blue = 1 - cor.getBlue();
+					Color corNova = new Color(red, green, blue, cor.getOpacity());
+					pw.setColor(i, j, corNova);
+				}
+			}
+		}
+		return wi;
+	}
+	
+	public static Image filtrosHorizontal(Image img) { //horizontal
+		int w = (int)img.getWidth();
+		int h = (int)img.getHeight();
+		WritableImage wi = new WritableImage(w, h);
+		PixelReader pr = img.getPixelReader();
+		PixelWriter pw = wi.getPixelWriter();
+		int pedacoImg = h/3;
+		Double media;
+		for(int i=0; i<w; i++) {
+			for(int j=0; j<h; j++) {
+				if (j>=0 && j<=pedacoImg) { //Tons de Cinza no primeiro 1/3 da imagem
+					Color cor = pr.getColor(i, j);
+					media = (cor.getRed() + cor.getGreen() + cor.getBlue()) / 3;
+					Color corNova = new Color(media, media, media, cor.getOpacity());
+					pw.setColor(i, j, corNova);					
+				}
+				else if(j>pedacoImg && j<=(pedacoImg*2)) { //Limiarizacao na segunda parte da imagem
+					Color oldCor = pr.getColor(i, j);
+					Color newCor = null;
+					if(oldCor.getRed()>170.0/255.0) {
+						newCor = new Color(1, 1, 1, oldCor.getOpacity());
+					}else
+						newCor = new Color(0, 0, 0, oldCor.getOpacity());
+					pw.setColor(i, j, newCor);
+				}
+				else if(j>(pedacoImg*2)){ //Negativa na ultima parte da imagem
 					Color cor = pr.getColor(i, j);
 					Double red = 1 - cor.getRed();
 					Double green = 1 - cor.getGreen();
@@ -143,9 +181,7 @@ public class Pdi {
 		
 		for(int i=0; i<w; i++) {
 			for(int j=0; j<h; j++) {
-				//if(((i == clickX) & (i <= soltouX)) || ((j == clickY) & (j <= soltouY))) {
-				//if( ((i==clickX || i == soltouX) & (i >= clickX & i <= soltouX)) || ((j==clickY || j == soltouY) & (j >= clickY & j <= soltouY)) ) {
-
+	
 				Color cor = pr.getColor(i, j);
 				pw.setColor(i, j, cor);
 				
@@ -166,6 +202,46 @@ public class Pdi {
 		}
 		return wi;
 	}
+	
+	public static Image marcaFiltro(Double clickX, Double clickY, Double soltouX, Double soltouY, Image img) {
+		int w = (int)img.getWidth();
+		int h = (int)img.getHeight();
+		WritableImage wi = new WritableImage(w, h);
+		PixelReader pr = img.getPixelReader();
+		PixelWriter pw = wi.getPixelWriter();
+		
+		for(int i=0; i<w; i++) {
+			for(int j=0; j<h; j++) {
+				
+				Color cor = pr.getColor(i, j);
+				pw.setColor(i, j, cor);
+				
+				if(i>=clickX & i <= soltouX) {
+					if(j >= clickY & j <= soltouY ) {
+						cor = pr.getColor(i, j);
+						Double red = 1 - cor.getRed();
+						Double green = 1 - cor.getGreen();
+						Double blue = 1 - cor.getBlue();
+						Color corNova = new Color(red, green, blue, cor.getOpacity());
+						pw.setColor(i, j, corNova);						
+					}
+				}
+				if(j>=clickY & j <= soltouY) {
+					if(i > clickX & i < soltouX ) {
+						cor = pr.getColor(i, j);
+						Double red = 1 - cor.getRed();
+						Double green = 1 - cor.getGreen();
+						Double blue = 1 - cor.getBlue();
+						Color corNova = new Color(red, green, blue, cor.getOpacity());
+						pw.setColor(i, j, corNova);						
+					}
+				}
+			
+			}
+		}
+		return wi;
+	}
+	
 	
 	public static Image aumentar(Image img) {
 		int w = (int)img.getWidth() * 2;

@@ -56,7 +56,7 @@ public class PrincipalController {
 	
 	private Image imagem1, imagem2, imagem3;
 	private double clicoux, clicouy, soltoux, soltouy;
-	
+	private int marcarImg= 0; // 0 = borda ; 1 = filtro
 	@FXML
 	public void gerarHistograma(ActionEvent event) {
 		try {
@@ -144,6 +144,15 @@ public class PrincipalController {
 		imagem3 = Pdi.diminuir(imagem1);
 		atualizaImg3();
 	}
+	@FXML
+	public void marcarBorda() {
+		marcarImg = 0;
+	}
+	@FXML
+	public void marcarFiltro() {
+		marcarImg = 1;
+	}
+	
 	
 	@FXML
 	public void quadradoOuCirculo() {
@@ -219,8 +228,13 @@ public class PrincipalController {
 	}
 	
 	@FXML
-	public void desafio1() {
-		imagem3 = Pdi.desafio1(imagem1);
+	public void filtrosVertical() {
+		imagem3 = Pdi.filtrosVertical(imagem1);
+		atualizaImg3();
+	}
+	
+	public void filtrosHorizontal() {
+		imagem3 = Pdi.filtrosHorizontal(imagem1);
 		atualizaImg3();
 	}
 	
@@ -273,7 +287,10 @@ public class PrincipalController {
 		soltouy = evt.getY();
 		ImageView iv = (ImageView) evt.getTarget();
 		if(iv.getImage() != null) {
-			imagem3 = Pdi.desenho(clicoux, clicouy, soltoux, soltouy, imagem1);
+			if(marcarImg == 0) //Cria uma borda na area marcada
+				imagem3 = Pdi.desenho(clicoux, clicouy, soltoux, soltouy, imagem1);
+			if(marcarImg == 1) //Aplica filtro na area marcada
+				imagem3 = Pdi.marcaFiltro(clicoux, clicouy, soltoux, soltouy, imagem1);
 			atualizaImg3();
 		}
 	}

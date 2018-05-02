@@ -1,7 +1,6 @@
 package pdi;
 
 import java.util.ArrayList;
-
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -286,6 +285,29 @@ public class Pdi {
 		}
 		
 		return wi;
+	}
+	
+	
+	public static int quadradoOuCirculo(Image img) {
+		int w = (int)img.getWidth();
+		int h = (int)img.getHeight();
+		PixelReader pr = img.getPixelReader();
+
+	
+		for(int i=0; i<w; i++) {
+			for(int j=0; j<h; j++) {
+				if(pr.getColor(i, j).getRed() == 0 & pr.getColor(i, j).getGreen() == 0  & pr.getColor(i, j).getBlue() == 0 ) {//Achou o primeiro pixel preto
+					//Se o pixel da direita e o pixel de baixo forem pretos então é um quadrado
+					if((pr.getColor(i+1, j).getRed() == 0 & pr.getColor(i+1, j).getGreen() == 0  & pr.getColor(i+1, j).getBlue() == 0) & (pr.getColor(i, j+1).getRed() == 0 && pr.getColor(i, j+1).getGreen() == 0  && pr.getColor(i, j+1).getBlue() == 0)) {
+						return 1;
+					}
+					else {
+						return 2;
+					}
+				}
+			}
+		}		
+		return 0;
 	}
 	
 	public static int[] histograma(Image img, int canal) {

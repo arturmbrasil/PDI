@@ -145,6 +145,20 @@ public class PrincipalController {
 		atualizaImg3();
 	}
 	
+	@FXML
+	public void quadradoOuCirculo() {
+		int forma = Pdi.quadradoOuCirculo(imagem1);
+		if(forma == 0) {
+			exibeMsg("Erro", "Não sei que forma é essa!", "Não é um quadrado e nem um círculo...", AlertType.ERROR);
+		}
+		else if(forma == 1) {
+			exibeMsg("Quadrado", "Isso é um quadrado!", "", AlertType.INFORMATION);
+		}
+		else if(forma == 2) {
+			exibeMsg("Círculo", "Isso é um Círculo!", "", AlertType.INFORMATION);
+		}
+	}
+	
 	@FXML 
 	public void ruidosMedia() {
 		if(tres.isSelected()) {

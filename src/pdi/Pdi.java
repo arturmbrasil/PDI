@@ -13,6 +13,138 @@ import javafx.scene.paint.Color;
 
 public class Pdi {
 	
+	public static Image questao1(Image img, Color corGrade, Integer distancia) {
+		int w = (int)img.getWidth();
+		int h = (int)img.getHeight();
+		WritableImage wi = new WritableImage(w, h);
+		PixelReader pr = img.getPixelReader();
+		PixelWriter pw = wi.getPixelWriter();
+		int contador = distancia;
+		for(int i=0; i<w; i++) {
+			for(int j=0; j<h; j++) {
+				if(i==contador-1) {
+					Color cor = corGrade;
+					pw.setColor(i, j, cor);
+					if(j==h-1) {
+						contador = contador + distancia;
+					}
+				}
+				else {
+					Color cor = pr.getColor(i, j);
+					pw.setColor(i, j, cor);					
+				}
+			
+			}
+		}
+		return wi;
+	}
+	
+
+	public static Image questao2(Image img) { //Inverte segunda parte da imagem
+		int w = (int)img.getWidth();
+		int h = (int)img.getHeight();
+		WritableImage wi = new WritableImage(w, h);
+		PixelReader pr = img.getPixelReader();
+		PixelWriter pw = wi.getPixelWriter();
+		int pedacoImg = h/2;
+		
+		Image imgInvertida = img;
+		imgInvertida = rotacionar(imgInvertida);
+		imgInvertida = rotacionar(imgInvertida);
+		PixelReader prInvertida = imgInvertida.getPixelReader();
+
+		for(int i=0; i<w; i++) {
+			for(int j=0; j<=pedacoImg; j++) {
+					//Primeira parte da imagem fica normal
+					Color cor = pr.getColor(i, j);
+					pw.setColor(i, j, cor);
+			}
+		}
+		
+		for(int i=0; i<w; i++) {
+			for(int j=pedacoImg , k = 0; j<h; j++ , k++) {		
+				//Inverte segunda parte da imagem
+				Color cor = prInvertida.getColor(i, k);
+				pw.setColor(i, j, cor);		
+			}
+		}
+		
+		return wi;
+	}
+	
+	public static Boolean[] questao3(Double clickX, Double clickY, Double soltouX, Double soltouY, Image img) {
+		int w = (int)img.getWidth();
+		int h = (int)img.getHeight();
+		PixelReader pr = img.getPixelReader();
+		Boolean cores[] = new Boolean[3];
+		cores[0] = false; //red
+		cores[1] = false; //blue
+		cores[2] = false; //green
+		
+		for(int i=0; i<w; i++) {
+			for(int j=0; j<h; j++) {
+				
+				Color cor = pr.getColor(i, j);
+					
+				if(i>=clickX & i <= soltouX) {
+					if(j >= clickY & j <= soltouY ) {
+						if(cor.getRed() == 1 & cor.getGreen() == 0 & cor.getBlue() == 0) {
+							cores[0] = true; // Tem vermelho na parte selecionada
+						}
+						else if(cor.getRed() == 0 & cor.getGreen() == 1 & cor.getBlue() == 0) {
+							cores[1] = true; // Tem verde na parte selecionada
+						}
+						else if(cor.getRed() == 0 & cor.getGreen() == 0 & cor.getBlue() == 1) {
+							cores[2] = true; // Tem azul na parte selecionada
+						}
+					}
+				}
+				if(j>=clickY & j <= soltouY) {
+					if(i > clickX & i < soltouX ) {
+						
+						if(cor.getRed() == 1 & cor.getGreen() == 0 & cor.getBlue() == 0) {
+							cores[0] = true; // Tem vermelho na parte selecionada
+						}
+						else if(cor.getRed() == 0 & cor.getGreen() == 1 & cor.getBlue() == 0) {
+							cores[1] = true; // Tem verde na parte selecionada
+						}
+						else if(cor.getRed() == 0 & cor.getGreen() == 0 & cor.getBlue() == 1) {
+							cores[2] = true; // Tem azul na parte selecionada
+						}
+					}
+				}
+			
+			}
+		}
+		
+		return cores;
+	}
+	
+	public static Image criaImgRGB() {
+		int w = 200;
+		int h = 300;
+		WritableImage wi = new WritableImage(w, h);
+		PixelWriter pw = wi.getPixelWriter();
+		
+		for(int i=0; i<w; i++) {
+			for(int j=0; j<h; j++) {
+				if(j<100) {
+					Color cor = new Color(1, 0, 0, 1);
+					pw.setColor(i, j, cor);					
+				}else if(j<200) {
+					Color cor = new Color(0, 1, 0, 1);
+					pw.setColor(i, j, cor);										
+				}else {
+					Color cor = new Color(0, 0, 1, 1);
+					pw.setColor(i, j, cor);					
+				}
+			}
+		}
+		
+		return wi;
+	}
+	
+	
 	public static Image filtrosVertical(Image img) { //vertical
 		int w = (int)img.getWidth();
 		int h = (int)img.getHeight();

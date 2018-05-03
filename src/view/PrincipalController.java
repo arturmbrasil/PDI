@@ -46,6 +46,9 @@ public class PrincipalController {
 	@FXML TextField pcimg1;
 	@FXML TextField pcimg2;
 	
+	@FXML TextField tfCorGrade;
+	@FXML TextField tfDistancia;
+	
 	@FXML Slider slider;
 	
 	@FXML ToggleGroup vizinho;
@@ -56,7 +59,48 @@ public class PrincipalController {
 	
 	private Image imagem1, imagem2, imagem3;
 	private double clicoux, clicouy, soltoux, soltouy;
-	private int marcarImg= 0; // 0 = borda ; 1 = filtro
+	private int marcarImg= 2; // 0 = borda ; 1 = filtro ; 2 = Cor selecionada(questao 3 prova 1)
+	
+	@FXML
+	public void questao1() { //Grade
+		int cor = Integer.parseInt(tfCorGrade.getText());
+		int distancia = Integer.parseInt(tfDistancia.getText());
+		
+		Color corGrade;
+
+		if(cor == 1) //vermelho
+			corGrade = new Color(1, 0, 0, 1);
+		else if(cor == 2) //verde
+			corGrade = new Color(0, 1, 0, 1);
+		else if(cor == 3) //azul
+			corGrade = new Color(0, 0, 1, 1);
+		else {
+			exibeMsg("Erro", "Valores Inválidos", "", AlertType.ERROR);
+			return ;
+		}
+			
+		imagem3 = Pdi.questao1(imagem1, corGrade, distancia);
+		atualizaImg3();
+	}
+	
+	@FXML
+	public void questao2() { //Inverter metade da imagem
+		imagem3 = Pdi.questao2(imagem1);
+		atualizaImg3();
+	}
+	
+	@FXML
+	public void questao3() { //Qual é a cor selecionada?
+		marcarImg = 2;
+		imagem1 = Pdi.criaImgRGB();
+		imgv1.setImage(imagem1);
+		imgv1.setFitWidth(imagem1.getWidth());
+		imgv1.setFitHeight(imagem1.getHeight());
+
+		exibeMsg("Aviso!", "Selecione a imagem agora", "Selecione a imagem e direi qual foi a cor selecionada.", AlertType.WARNING);
+	}
+	
+	
 	@FXML
 	public void gerarHistograma(ActionEvent event) {
 		try {
@@ -287,11 +331,29 @@ public class PrincipalController {
 		soltouy = evt.getY();
 		ImageView iv = (ImageView) evt.getTarget();
 		if(iv.getImage() != null) {
-			if(marcarImg == 0) //Cria uma borda na area marcada
+			if(marcarImg == 0) {
+				//Cria uma borda na area marcada
 				imagem3 = Pdi.desenho(clicoux, clicouy, soltoux, soltouy, imagem1);
-			if(marcarImg == 1) //Aplica filtro na area marcada
+				atualizaImg3();
+			}
+			if(marcarImg == 1) {
+				//Aplica filtro na area marcada
 				imagem3 = Pdi.marcaFiltro(clicoux, clicouy, soltoux, soltouy, imagem1);
-			atualizaImg3();
+				atualizaImg3();
+			}
+			if(marcarImg == 2) {//Questao 3
+				Boolean[] cores = new Boolean[3];
+				cores = Pdi.questao3(clicoux, clicouy, soltoux, soltouy, imagem1);
+				if(cores[0]) {
+					exibeMsg("Cor encontrada", "Vermelho!", "", AlertType.INFORMATION);
+				}
+				if(cores[1]) {
+					exibeMsg("Cor encontrada", "Verde!", "", AlertType.INFORMATION);
+				}
+				if(cores[2]) {
+					exibeMsg("Cor encontrada", "Azul!", "", AlertType.INFORMATION);
+				}
+			}
 		}
 	}
 	

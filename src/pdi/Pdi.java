@@ -1,6 +1,19 @@
 package pdi;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
+
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
+import org.opencv.core.MatOfDouble;
+import org.opencv.core.Scalar;
+import org.opencv.core.Size;
+import org.opencv.highgui.HighGui;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
+
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -12,6 +25,61 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
 public class Pdi {
+	
+	public static Image canny(String path) {
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		Mat image = Imgcodecs.imread(path);
+		Imgproc.cvtColor(image, image, Imgproc.COLOR_BGR2GRAY);
+		Imgproc.blur(image, image, new Size(3,3));
+		Imgproc.Canny(image, image, 15, 45, 3, false);
+		Mat dest = new Mat();
+		Core.add(dest, Scalar.all(0), dest);
+		image.copyTo(dest, image);
+		MatOfByte mtb = new MatOfByte();
+		Imgcodecs.imencode(".png", image, mtb);
+		return new Image(new ByteArrayInputStream(mtb.toArray()));
+	}
+	
+	
+	public static Image laplace(String path) {
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		Mat src = Imgcodecs.imread(path);
+
+		Mat src_gray = new Mat(), dst = new Mat();
+	    	int kernel_size = 3;
+	    	int scale = 1;
+	    	int delta = 0;
+	    	int ddepth = CvType.CV_16S;
+	    
+	    	Imgproc.cvtColor( src, src_gray, Imgproc.COLOR_RGB2GRAY );
+	    	Mat abs_dst = new Mat();
+	    	Imgproc.Laplacian( src_gray, dst, ddepth, kernel_size, scale, delta, Core.BORDER_DEFAULT );
+	    	// converting back to CV_8U
+	    	Core.convertScaleAbs( dst, abs_dst );
+
+		MatOfByte mtb = new MatOfByte();
+		Imgcodecs.imencode(".png", abs_dst, mtb);
+		return new Image(new ByteArrayInputStream(mtb.toArray()));
+
+	}
+	
+	public static Image sobel(String path) {
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+
+		Mat src = Imgcodecs.imread(path);
+		Mat gray = new Mat();
+		Imgproc.cvtColor( src, gray, Imgproc.COLOR_RGB2GRAY );
+		Imgproc.Sobel(gray, gray, gray.depth(), 2, 2);
+
+		Mat dest = new Mat();
+		Core.add(dest, Scalar.all(0), dest);
+		gray.copyTo(dest, gray);
+		MatOfByte mtb = new MatOfByte();
+		Imgcodecs.imencode(".png", gray, mtb);
+		return new Image(new ByteArrayInputStream(mtb.toArray()));
+	}
+	
+	
 	
 	public static Image questao1(Image img, Color corGrade, Integer distancia) {
 		int w = (int)img.getWidth();
@@ -33,7 +101,6 @@ public class Pdi {
 					Color cor = pr.getColor(i, j);
 					pw.setColor(i, j, cor);					
 				}
-			
 			}
 		}
 		return wi;

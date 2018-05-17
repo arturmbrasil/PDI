@@ -60,9 +60,29 @@ public class PrincipalController {
 	private Image imagem1, imagem2, imagem3;
 	private double clicoux, clicouy, soltoux, soltouy;
 	private int marcarImg= 2; // 0 = borda ; 1 = filtro ; 2 = Cor selecionada(questao 3 prova 1)
+	private File f;
+	@FXML
+	public void canny() {
+		imagem3 = Pdi.canny(f.getAbsolutePath());
+		atualizaImg3();
+	}
+	
+	@FXML
+	public void laplace() {
+		imagem3 = Pdi.laplace(f.getAbsolutePath());
+		atualizaImg3();
+	}
+		
+	@FXML
+	public void sobel() {
+		imagem3 = Pdi.sobel(f.getAbsolutePath());
+		atualizaImg3();
+	}	
+	
 	
 	@FXML
 	public void questao1() { //Grade
+		
 		int cor = Integer.parseInt(tfCorGrade.getText());
 		int distancia = Integer.parseInt(tfDistancia.getText());
 		
@@ -292,7 +312,7 @@ public class PrincipalController {
 
 	@FXML
 	public void abreImg1() {
-		File f = selecionaImagem();
+		f = selecionaImagem();
 		if(f != null) {
 			imagem1 = new Image(f.toURI().toString());
 			imgv1.setImage(imagem1);
@@ -303,7 +323,7 @@ public class PrincipalController {
 	
 	@FXML
 	public void abreImg2() {
-		File f = selecionaImagem();
+		f = selecionaImagem();
 		if(f != null) {
 			imagem2 = new Image(f.toURI().toString());
 			imgv2.setImage(imagem2);

@@ -346,6 +346,8 @@
                                     <Button layoutX="51.0" layoutY="91.0" mnemonicParsing="false" onAction="#canny" text="Canny" />
                                     <Button layoutX="65.0" layoutY="118.0" mnemonicParsing="false" onAction="#laplace" text="Laplace" />
                                     <Button layoutX="90.0" layoutY="37.0" mnemonicParsing="false" onAction="#sobel" text="Sobel" />
+                                    <Button layoutX="97.0" layoutY="64.0" mnemonicParsing="false" onAction="#dilate" text="Dilatação" />
+                                    <Button layoutX="97.0" layoutY="91.0" mnemonicParsing="false" onAction="#erode" text="Erosão" />
                                  </children>
                               </VBox>
                            </children>

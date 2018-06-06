@@ -61,6 +61,21 @@ public class PrincipalController {
 	private double clicoux, clicouy, soltoux, soltouy;
 	private int marcarImg= 2; // 0 = borda ; 1 = filtro ; 2 = Cor selecionada(questao 3 prova 1)
 	private File f;
+	
+
+	@FXML
+	public void dilate() {
+		imagem3 = Pdi.dilate(f.getAbsolutePath());
+		atualizaImg3();
+	}
+
+	@FXML
+	public void erode() {
+		imagem3 = Pdi.erode(f.getAbsolutePath());
+		atualizaImg3();
+	}
+	
+	
 	@FXML
 	public void canny() {
 		imagem3 = Pdi.canny(f.getAbsolutePath());

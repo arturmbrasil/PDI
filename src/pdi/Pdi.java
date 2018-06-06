@@ -7,10 +7,8 @@ import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
-import org.opencv.core.MatOfDouble;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
-import org.opencv.highgui.HighGui;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
@@ -69,13 +67,58 @@ public class Pdi {
 		Mat src = Imgcodecs.imread(path);
 		Mat gray = new Mat();
 		Imgproc.cvtColor( src, gray, Imgproc.COLOR_RGB2GRAY );
+		//Imgproc.Sobel(gray, gray, gray.depth(), 1, 0, -1, 1.0, 0);
+		//Imgproc.Sobel(gray, gray, gray.depth(), 1, 0);
 		Imgproc.Sobel(gray, gray, gray.depth(), 2, 2);
-
+	    
 		Mat dest = new Mat();
 		Core.add(dest, Scalar.all(0), dest);
 		gray.copyTo(dest, gray);
 		MatOfByte mtb = new MatOfByte();
 		Imgcodecs.imencode(".png", gray, mtb);
+		return new Image(new ByteArrayInputStream(mtb.toArray()));
+	}
+	
+	public static Image erode(String path) {
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+
+		Mat src = Imgcodecs.imread(path);
+		
+		Mat destination = new Mat(src.rows(),src.cols(),src.type());
+        
+        destination = src;
+
+        int erosion_size = 5;
+        
+        Mat element = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new  Size(2*erosion_size + 1, 2*erosion_size+1));
+        Imgproc.erode(src, destination, element);
+        
+        	Core.add(destination, Scalar.all(0), destination);
+        	destination.copyTo(destination, src);
+		MatOfByte mtb = new MatOfByte();
+		Imgcodecs.imencode(".png", destination, mtb);
+		return new Image(new ByteArrayInputStream(mtb.toArray()));
+	}
+	
+	public static Image dilate(String path) {
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+
+		Mat src = Imgcodecs.imread(path);
+		
+		Mat destination = new Mat(src.rows(),src.cols(),src.type());
+        
+        destination = src;
+
+        int dilation_size = 5;
+        
+        Mat element = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new  Size(2*dilation_size + 1, 2*dilation_size+1));
+
+        Imgproc.dilate(src, destination, element);
+        
+        	Core.add(destination, Scalar.all(0), destination);
+        	destination.copyTo(destination, src);
+		MatOfByte mtb = new MatOfByte();
+		Imgcodecs.imencode(".png", destination, mtb);
 		return new Image(new ByteArrayInputStream(mtb.toArray()));
 	}
 	

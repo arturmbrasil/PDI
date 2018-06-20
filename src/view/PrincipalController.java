@@ -62,7 +62,6 @@ public class PrincipalController {
 	private int marcarImg= 2; // 0 = borda ; 1 = filtro ; 2 = Cor selecionada(questao 3 prova 1)
 	private File f;
 	
-
 	@FXML
 	public void dilate() {
 		imagem3 = Pdi.dilate(f.getAbsolutePath());
@@ -322,8 +321,6 @@ public class PrincipalController {
 		imgv3.setFitWidth(imagem3.getWidth());
 		imgv3.setFitHeight(imagem3.getHeight());
 	}
-
-
 
 	@FXML
 	public void abreImg1() {

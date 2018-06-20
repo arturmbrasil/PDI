@@ -43,7 +43,7 @@ public class Controller {
 			salvaTemp(imagem1);
 
 		}
-		if (passo == 2) { //2 passo: Limiarização 120
+		if (passo == 2) { //2 passo: Limiarização 140
 			lblPassos.setText("Passo 2: Limiarização 140");
 			imagem1 = Processamento.limiarizacao(imagem1, 140.0/255);
 			atualizaImg1();
@@ -53,7 +53,7 @@ public class Controller {
 		
 		if (passo == 3) { //3 passo: Eliminar Ruidos
 			lblPassos.setText("Passo 3: Eliminar Ruidos");
-			imagem1 = Processamento.ruidos("/Users/arturbrasil/Desktop/ImagensBraile/temp.png");
+			imagem1 = Processamento.ruidos("imagens/temp.png");
 			atualizaImg1();
 			
 			salvaTemp(imagem1);
@@ -68,7 +68,7 @@ public class Controller {
 		
 		if (passo == 5) { //5 passo: Dilatação
 			lblPassos.setText("Passo 5: Dilatação");
-			imagem1 = Processamento.dilatacao("/Users/arturbrasil/Desktop/ImagensBraile/temp.png");
+			imagem1 = Processamento.dilatacao("imagens/temp.png");
 			atualizaImg1();
 
 			salvaTemp(imagem1);
@@ -76,7 +76,6 @@ public class Controller {
 		
 		if (passo == 6) { //6 passo: Eliminar Bordas e marcar com linhas
 			lblPassos.setText("Passo 6: Eliminar Bordas e marcar com linhas");
-			
 		}
 		
 		
@@ -93,7 +92,7 @@ public class Controller {
 	private void salvaTemp(Image img) {
 		BufferedImage bImg = SwingFXUtils.fromFXImage(img, null);
 		try { //Salva imagem temp
-			File outputfile = new File("/Users/arturbrasil/Desktop/ImagensBraile/temp.png");
+			File outputfile = new File("imagens/temp.png");
 			ImageIO.write(bImg, "png", outputfile);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -103,7 +102,7 @@ public class Controller {
 	private File selecionaImagem() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imagens", "*.png", "*.PNG", "*.jpg", "*.JPG", "*.gif", "*.GIF", "*.bmp", "*.BMP"));
-		fileChooser.setInitialDirectory(new File("/Users/arturbrasil/Desktop/ImagensBraile"));
+		fileChooser.setInitialDirectory(new File("imagens/"));
 		File imgSelec = fileChooser.showOpenDialog(null);
 		try {
 			if (imgSelec != null) {
